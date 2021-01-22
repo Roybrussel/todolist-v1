@@ -9,18 +9,22 @@
 </head>
 
 <body>
-    <h1> <%= kindOfDay %></h1>
-    <form action="/" method="post">
-        <input type="text" name="task" placeholder="Please fill in your task">
-        <button type="submit">Add</button>
-    </form>
+    <div class="box" id="heading">
+        <h1> <%= kindOfDay %></h1>
+    </div>
 
-    <h3>List of tasks</h3>
-    <ul id="task-list">
+    <div class="box">
         <% for (var i=0; i<listOfTasks.length; i++) { %>
-        <li><%= listOfTasks[i] %></li>
+        <div class="item">
+            <input type="checkbox">
+            <p><%= listOfTasks[i] %></p>
+        </div>
         <% } %>
-    </ul>
+        <form action="/" method="post" class="item">
+            <input type="text" name="task" placeholder="Add new task" autocomplete="off">
+            <button type="submit">+</button>
+        </form>
+    </div>
 </body>
 
 </html>
