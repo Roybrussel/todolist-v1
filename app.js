@@ -3,7 +3,8 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-var tasks = [];
+let tasks = [];
+let workList = [];
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -21,13 +22,23 @@ app.get("/", function (req, res) {
 
   let day = today.toLocaleDateString("en-US", options);
 
-  res.render("list", { kindOfDay: day, listOfTasks: tasks });
+  res.render("list", { listTitle: day, listOfTasks: tasks });
 });
 
 app.post("/", function (req, res) {
-  tasks.push(req.body.task);
-  console.log(tasks);
-  res.redirect("/");
+  let task = req.body.task;
+
+  if (req.body.list === "Work") {
+    workList.push(task);
+    res.redirect("/work");
+  } else {
+    tasks.push(task);
+    res.redirect("/");
+  }
+});
+
+app.get("/work", function (req, res) {
+  res.render("list", { listTitle: "Work List", listOfTasks: workList });
 });
 
 app.listen(3000, function () {
