@@ -1,30 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include("header") -%>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-do list v1</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-</head>
+<div class="box" id="heading">
+    <h1> <%= listTitle %></h1>
+</div>
 
-<body>
-    <div class="box" id="heading">
-        <h1> <%= listTitle %></h1>
+<div class="box">
+    <% for (var i=0; i<listOfTasks.length; i++) { %>
+    <div class="item">
+        <input type="checkbox">
+        <p><%= listOfTasks[i] %></p>
     </div>
+    <% } %>
+    <form action="/" method="post" class="item">
+        <input type="text" name="task" placeholder="Add new task" autocomplete="off">
+        <button type="submit" name="list" value=<%= listTitle %>>+</button>
+    </form>
+</div>
 
-    <div class="box">
-        <% for (var i=0; i<listOfTasks.length; i++) { %>
-        <div class="item">
-            <input type="checkbox">
-            <p><%= listOfTasks[i] %></p>
-        </div>
-        <% } %>
-        <form action="/" method="post" class="item">
-            <input type="text" name="task" placeholder="Add new task" autocomplete="off">
-            <button type="submit" name="list" value=<%= listTitle %>>+</button>
-        </form>
-    </div>
-</body>
-
-</html>
+<%- include("footer") -%>
