@@ -4,6 +4,8 @@ const date = require(__dirname + "/date.js");
 
 const app = express();
 
+// Getting document ready for Mongoose
+
 let tasks = [];
 let workList = [];
 
