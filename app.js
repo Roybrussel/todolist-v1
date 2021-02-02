@@ -20,31 +20,34 @@ const tasksSchema = {
 
 const Task = mongoose.model("task", tasksSchema);
 
-// const task1 = new Task({
-//   name: "Welcome to your to-do list!",
-// });
+const task1 = new Task({
+  name: "Welcome to your to-do list!",
+});
 
-// const task2 = new Task({
-//   name: "Hit the + buton to add a new item.",
-// });
+const task2 = new Task({
+  name: "Hit the + buton to add a new item.",
+});
 
-// const task3 = new Task({
-//   name: "<-- Hit this to delete an item.",
-// });
+const task3 = new Task({
+  name: "<-- Hit this to delete an item.",
+});
 
-// const defaultTasks = [task1, task2, task3];
-
-// Task.insertMany(defaultTasks, function (err) {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log("Succesfully saved default tasks to database.");
-//   }
-// });
+const defaultTasks = [task1, task2, task3];
 
 app.get("/", function (req, res) {
   Task.find({}, function (err, foundTasks) {
-    res.render("list", { listTitle: "Today", listOfTasks: foundTasks });
+    if (foundTasks.length === 0) {
+      Task.insertMany(defaultTasks, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Succesfully saved default tasks to database.");
+        }
+      });
+      res.redirect("/");
+    } else {
+      res.render("list", { listTitle: "Today", listOfTasks: foundTasks });
+    }
   });
 });
 
