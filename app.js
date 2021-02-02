@@ -52,15 +52,28 @@ app.get("/", function (req, res) {
 });
 
 app.post("/", function (req, res) {
-  let task = req.body.task;
+  const taskName = req.body.task;
 
-  if (req.body.list === "Work") {
-    workList.push(task);
-    res.redirect("/work");
-  } else {
-    tasks.push(task);
-    res.redirect("/");
-  }
+  const task = new Task({
+    name: taskName,
+  });
+
+  task.save();
+
+  res.redirect("/");
+});
+
+app.post("/delete", function (req, res) {
+  const checkedTaskId = req.body.checkbox;
+
+  Task.findByIdAndDelete(checkedTaskId, function (err, data) {
+    if (err) {
+      console.log("Task has not been deleted properly");
+    } else {
+      res.redirect("/");
+      console.log("Task has successfully been deleted!");
+    }
+  });
 });
 
 app.get("/work", function (req, res) {
