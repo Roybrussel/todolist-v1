@@ -34,6 +34,13 @@ const task3 = new Task({
 
 const defaultTasks = [task1, task2, task3];
 
+const listSchema = {
+  name: String,
+  tasks: [tasksSchema],
+};
+
+const List = mongoose.model("List", listSchema);
+
 app.get("/", function (req, res) {
   Task.find({}, function (err, foundTasks) {
     if (foundTasks.length === 0) {
@@ -76,8 +83,27 @@ app.post("/delete", function (req, res) {
   });
 });
 
-app.get("/work", function (req, res) {
-  res.render("list", { listTitle: "Work List", listOfTasks: workList });
+app.get("/:categoryId", function (req, res) {
+  const categoryId = req.params.categoryId;
+
+  List.findOne({ name: categoryId }, function (err, foundTask) {
+    if (!err) {
+      if (!foundTask) {
+        const list = new List({
+          name: categoryId,
+          tasks: defaultTasks,
+        });
+
+        list.save();
+        res.redirect(`/${categoryId}`);
+      } else {
+        res.render("list", {
+          listTitle: foundTask.name,
+          listOfTasks: foundTask.tasks,
+        });
+      }
+    }
+  });
 });
 
 app.get("/about", function (req, res) {
