@@ -12,10 +12,10 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-mongoose.connect(
-  `mongodb+srv://roybru:${process.env.mongodb_password}@cluster0.6jkaq.mongodb.net/todolistDB?retryWrites=true&w=majority`,
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
+mongoose.connect(`${process.env.MONGO_ATLAS}`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 mongoose.set("useFindAndModify", false);
 
