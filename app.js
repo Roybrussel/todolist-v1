@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -11,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 mongoose.connect(
-  "mongodb+srv://admin-mikaela:BIVpMLc21Lp3lyUJ@cluster0.p6fma.mongodb.net/todolistDB?retryWrites=true&w=majority",
+  `mongodb+srv://roybru:${process.env.mongodb_password}@cluster0.6jkaq.mongodb.net/todolistDB?retryWrites=true&w=majority`,
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
